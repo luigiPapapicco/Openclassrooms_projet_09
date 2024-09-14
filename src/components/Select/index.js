@@ -15,11 +15,13 @@ const Select = ({
 }) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
+  // Modification ici pour passer `newValue` à `onChange`
   const changeValue = (newValue) => {
-    onChange();
-    setValue(newValue);
-    setCollapsed(newValue);
+    onChange(newValue); // Passe la nouvelle valeur à la fonction `onChange`
+    setValue(newValue); // Met à jour la valeur sélectionnée dans le state local
+    setCollapsed(true); // Ferme la liste déroulante après sélection
   };
+
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}

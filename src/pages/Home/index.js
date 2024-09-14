@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
@@ -13,7 +14,17 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData()
+  const { data } = useData();
+  const [last, setLast] = useState(null);
+
+  useEffect(() => {
+    if (data && data.events && data.events.length > 0) {
+      setLast(data.events[data.events.length - 1]);  // Accéder au dernier événement
+    }
+  }, [data]);
+
+  // console.log("Data:", data);
+  // console.log("Last:", last);
   return <>
     <header>
       <Menu />
@@ -22,7 +33,7 @@ const Page = () => {
       <section className="SliderContainer">
         <Slider />
       </section>
-      <section className="ServicesContainer">
+      <section id="nos-services" className="ServicesContainer">
         <h2 className="Title">Nos services</h2>
         <p>Nous organisons des événements sur mesure partout dans le monde</p>
         <div className="ListContainer">
@@ -51,11 +62,11 @@ const Page = () => {
           </ServiceCard>
         </div>
       </section>
-      <section className="EventsContainer">
+      <section id="nos-realisations" className="EventsContainer">
         <h2 className="Title">Nos réalisations</h2>
         <EventList />
       </section>
-      <section className="PeoplesContainer">
+      <section id="notre-equipe" className="PeoplesContainer">
         <h2 className="Title">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
         <div className="ListContainer">
@@ -113,16 +124,22 @@ const Page = () => {
         </Modal>
       </div>
     </main>
+    {/* // erreur corriger */}
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
+        
+        {last ? (
+          <EventCard
+            imageSrc={last.cover}
+            title={last.title}
+            date={new Date(last.date)}
+            small
+            label="boom"
+          />
+        ) : (
+          <p>Aucune donnée disponible pour afficher la dernière prestation.</p>
+        )}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>

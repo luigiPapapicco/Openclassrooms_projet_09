@@ -14,14 +14,21 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { data } = useData();
-  const [last, setLast] = useState(null);
+  // Utilisation du hook "useData" pour récupérer l'objet "data" depuis le DataContext.
+  const {data} = useData()
+
+  // Déclaration d'un état local "last" avec "useState", initialisé a "null". "Last" va stocker le dernier évenement de la liste des evenement une fois récupéré. "setLast" est la fonction permettant de mettre a jour cet état
+  const [last, setLast] = useState(null)
 
   useEffect(() => {
+    // Vérification que `data` existe et que la propriété `events` est présente dans `data`, et qu'il y a au moins un événement dans `events`.
     if (data && data.events && data.events.length > 0) {
-      setLast(data.events[data.events.length - 1]);  // Accéder au dernier événement
+      // Alors, mis à jour de l'état `last` avec le dernier élément de la liste `data.events`. `data.events.length - 1` donne l'index du dernier événement dans la liste.
+      setLast(data.events[data.events.length - 1])
     }
-  }, [data]);
+    // Le hook `useEffect` se déclenche chaque fois que `data` change grace au tableau de dépendance.
+    // Cela permet de mettre à jour `last` lorsque les données sont chargées ou modifiées.
+  }, [data])
 
   // console.log("Data:", data);
   // console.log("Last:", last);
@@ -124,11 +131,11 @@ const Page = () => {
         </Modal>
       </div>
     </main>
-    {/* // erreur corriger */}
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
         
+        {/* condition vérifiant si c'est bien le last si oui on met l'eventCard et ses props sinon on passe un paragraphe d'information. */}
         {last ? (
           <EventCard
             imageSrc={last.cover}
@@ -140,6 +147,7 @@ const Page = () => {
         ) : (
           <p>Aucune donnée disponible pour afficher la dernière prestation.</p>
         )}
+
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>

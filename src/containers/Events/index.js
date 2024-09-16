@@ -51,6 +51,7 @@ const EventList = () => {
     setType(evtType); // Mettre à jour l'état `type` avec la nouvelle catégorie sélectionnée
   };
 
+  
   // Calcul du nombre total de pages en fonction du nombre d'événements filtrés
   const pageNumber = Math.ceil(filteredEvents.length / PER_PAGE);
 

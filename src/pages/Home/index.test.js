@@ -44,10 +44,12 @@ describe("When a page is created", () => {
     render(<Home />);
     const personName = await screen.findByText("Samira");
     const personName2 = await screen.findByText("Jean-baptiste");
+    const personName3 = await screen.findByText("Christine");
 
 
     expect(personName).toBeInTheDocument();
     expect(personName2).toBeInTheDocument();
+    expect(personName3).toBeInTheDocument();
   });
 
   it("a footer is displayed", async () => {

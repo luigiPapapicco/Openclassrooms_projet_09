@@ -23,8 +23,10 @@ const Page = () => {
   useEffect(() => {
     // Vérification que `data` existe et que la propriété `events` est présente dans `data`, et qu'il y a au moins un événement dans `events`.
     if (data && data.events && data.events.length > 0) {
+      // Trier les événements par date décroissante
+      const sortedEvents = [...data.events].sort((a, b) => new Date(b.date) - new Date(a.date));
       // Alors, mis à jour de l'état `last` avec le dernier élément de la liste `data.events`. `data.events.length - 1` donne l'index du dernier événement dans la liste.
-      setLast(data.events[data.events.length - 1])
+      setLast(sortedEvents[0])
     }
     // Le hook `useEffect` se déclenche chaque fois que `data` change grace au tableau de dépendance.
     // Cela permet de mettre à jour `last` lorsque les données sont chargées ou modifiées.
